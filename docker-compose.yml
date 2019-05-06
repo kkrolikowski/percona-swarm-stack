@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+
+  discovery:
+    image: splazit/etcd-swarm
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.role ==  manager]
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        delay: 30s
+    environment: 
+      - ETCD_HEARTBEAT_INTERVAL=1000
+      - ETCD_ELECTION_TIMEOUT=10000
+    networks: 
+      - etcd-net
+
+  clsql:
+    image: percona/percona-xtradb-cluster:5.7
+    networks: 
+      - clsql2-net
+      - etcd-net
+    deploy:
+      replicas: 4
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - CLUSTER_NAME=clsql
+      - DISCOVERY_SERVICE=discovery:2379
+
+  sqlproxy:
+    image: perconalab/proxysql
+    deploy:
+      replicas: 1
+    ports:
+      - 3306:3306
+      - 6032:6032
+    environment:
+      - CLUSTER_NAME=clsql
+      - DISCOVERY_SERVICE=discovery:2379
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PROXY_USER=proxyuser
+      - MYSQL_PROXY_PASSWORD=s3cret
+    networks:
+      - front
+      - etcd-net
+      - clsql2-net
+   
+networks:
+  clsql2-net:
+  etcd-net:
+  front:
