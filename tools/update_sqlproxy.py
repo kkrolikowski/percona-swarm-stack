@@ -2,10 +2,10 @@
 
 import docker
 
-client = docker.from_env()
+dockerCli = docker.from_env()
 
 try:
-    for container in client.containers.list():
+    for container in dockerCli.containers.list():
         if "percona_sqlproxy" in container.name:
             ret = container.exec_run("add_cluster_nodes.sh", stdout=False,stderr=False)
             print ret
