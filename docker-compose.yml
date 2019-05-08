@@ -12,6 +12,8 @@ services:
         parallelism: 1
         failure_action: rollback
         delay: 30s
+    ports:
+      - 2379:2379
     environment: 
       - ETCD_HEARTBEAT_INTERVAL=1000
       - ETCD_ELECTION_TIMEOUT=10000
