@@ -7,7 +7,7 @@ dockerCli = docker.from_env()
 etcdCli = etcd.Client(host='swarm-node1.lan', port=2379)
 
 try:
-    etcdCli.read('/v2/keys/pxc-cluster/clsql', recursive=True)
+    etcdCli.read('/v2/keys/pxc-cluster/clsql/nodes', recursive=True)
 except etcd.EtcdKeyNotFound:
     print "nothing found"
 
