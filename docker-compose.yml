@@ -49,6 +49,17 @@ services:
       - front
       - etcd-net
       - clsql2-net
+  
+  sqlproxy_update:
+    image: devkrolikowski/sqlproxy_update_service
+    deploy:
+      replicas: 1
+    environment:
+      - CLUSTER_NAME=clsql
+      - DISCOVERY_SERVICE=discovery:2379
+    networks:
+      - etcd-net
+      - clsql2-net
    
 networks:
   clsql2-net:
