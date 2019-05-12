@@ -5,7 +5,7 @@ import requests
 
 dockerCli = docker.from_env()
 
-etcd = requests.get("http://swarm-node1.lan:2379/v2/keys/pxc-cluster/clsql/nodes")
+etcd = requests.get("http://swarm-node1.lan:2379/v2/keys/pxc-cluster/clsql")
 print etcd.text
 
 try:
