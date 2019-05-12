@@ -1,18 +1,12 @@
 #!/usr/bin/python
 
 import docker
-import etcd
+import requests
 
 dockerCli = docker.from_env()
-etcdCli = etcd.Client(host='swarm-node1.lan', port=2379)
 
-try:
-    directory = etcdCli.get('/v2/keys/pxc-cluster/clsql/nodes')
-    for res in directory.children:
-        print res.key
-except etcd.EtcdKeyNotFound:
-    print "nothing found"
-
+etcd = requests.get("http://swarm-node1.lan:2379/v2/keys/pxc-cluster/clsql/nodes")
+print etcd.text
 
 try:
     for container in dockerCli.containers.list():
