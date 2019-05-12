@@ -33,7 +33,7 @@ services:
       - DISCOVERY_SERVICE=discovery:2379
 
   sqlproxy:
-    image: perconalab/proxysql
+    image: devkrolikowski/proxysql
     deploy:
       replicas: 1
     ports:
@@ -45,6 +45,8 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PROXY_USER=proxyuser
       - MYSQL_PROXY_PASSWORD=s3cret
+      - PROXY_ADMIN_USER=proxyadmin
+      - PROXY_ADMIN_PASS=superSecret
     networks:
       - front
       - etcd-net
