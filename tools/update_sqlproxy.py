@@ -15,11 +15,13 @@ if etcd.status_code == 200:
         hosts = nodes['key'].split('/')
         print hosts[3]
 
-try:
-    for container in dockerCli.containers.list():
-        if "percona_sqlproxy" in container.name:
-            ret = container.exec_run("add_cluster_nodes.sh", stdout=False,stderr=False)
-            break
+    try:
+        for container in dockerCli.containers.list():
+            if "percona_sqlproxy" in container.name:
+                ret = container.exec_run("add_cluster_nodes.sh", stdout=False,stderr=False)
+                break
 
-except 	docker.errors.APIError:
-    print "[ERROR] Docker API error"
+    except 	docker.errors.APIError:
+        print "[ERROR] Docker API error"
+else:
+    print "ERROR connecting to etcd"
