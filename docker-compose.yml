@@ -59,6 +59,9 @@ services:
     environment:
       - CLUSTER_NAME=clsql
       - DISCOVERY_SERVICE=discovery:2379
+      - PROXY_ADMIN_USER=proxyadmin
+      - PROXY_ADMIN_PASS=superSecret
+      - SQLPROXY_HOST=sqlproxy
     networks:
       - etcd-net
    
