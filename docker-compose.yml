@@ -33,7 +33,7 @@ services:
       - DISCOVERY_SERVICE=discovery:2379
 
   sqlproxy:
-    image: devkrolikowski/proxysql
+    image: devkrolikowski/sqlproxy
     deploy:
       replicas: 1
     ports:
