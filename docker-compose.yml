@@ -59,7 +59,6 @@ services:
       - DISCOVERY_SERVICE=discovery:2379
     networks:
       - etcd-net
-      - clsql2-net
    
 networks:
   clsql2-net:
